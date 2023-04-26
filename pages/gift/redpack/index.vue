@@ -2,7 +2,7 @@
   <PageHeader
     title="Gift Reemption"
     right-text="Records"
-    right-route="/records"
+    right-route="/gift/redPack/record"
   />
 
   <div class="my-5 mx-3 rounded-lg bg-white px-2 py-1 border !border-secondary">
