@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHeader title="Bind Bank Account" back-route="/setting" />
+    <PageHeader title="Bind Bank Account" />
 
     <div class="px-4 py-2 space-y-5">
       <div class="bg-white rounded-lg py-2 text-sm">

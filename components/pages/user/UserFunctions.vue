@@ -3,14 +3,15 @@
     <h2 class="text-lg font-medium">Common Functions</h2>
 
     <div class="grid grid-cols-3 gap-3">
-      <div
+      <NuxtLink
         v-for="(link, i) in links"
         :key="i"
         class="flex flex-col items-center justify-center space-y-1"
+        :to="link.route"
       >
         <img :src="link.image" :style="{ width: '34px' }" alt="" />
         <p class="text-xs text-[#333]">{{ link.title }}</p>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
@@ -26,14 +27,14 @@ import teams_icon from "~/assets/images/pages/user/teams-icon.png";
 import agent_icon from "~/assets/images/pages/user/agent-icon.png";
 import office_icon from "~/assets/images/pages/user/office-icon.png";
 const links = ref([
-  { title: "My Projects", image: projects_icon },
-  { title: "Coupon", image: coupon_icon },
-  { title: "Funding Details", image: funding_icon },
-  { title: "Bind Bank Account", image: bind_bank_icon },
-  { title: "Invitation", image: invitation_icon },
-  { title: "Gift Redemption", image: gift_icon },
-  { title: "My Teams", image: teams_icon },
-  { title: "Agent Inverstment", image: agent_icon },
-  { title: "Office Email", image: office_icon },
+  { title: "My Projects", image: projects_icon, route: "/product/order" },
+  { title: "Coupon", image: coupon_icon, route: "/coupon" },
+  { title: "Funding Details", image: funding_icon, route: "/funding" },
+  { title: "Bind Bank Account", image: bind_bank_icon, route: "/setting/bank" },
+  { title: "Invitation", image: invitation_icon, route: "/share" },
+  { title: "Gift Redemption", image: gift_icon, route: "/gift/redPack" },
+  { title: "My Teams", image: teams_icon, route: "/user/team" },
+  { title: "Agent Inverstment", image: agent_icon, route: "/news/1" },
+  { title: "Office Email", image: office_icon, route: "/news/1" },
 ]);
 </script>

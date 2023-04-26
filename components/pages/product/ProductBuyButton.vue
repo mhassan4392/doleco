@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-1 bg-white fixed right-0 left-0 bottom-0">
+  <div class="px-4 py-1 bg-white fixed w-full max-width mx-auto bottom-0">
     <van-button
       @click="() => (show = !show)"
       class="!bg-secondary !text-lg !text-white font-medium w-full !rounded-lg"

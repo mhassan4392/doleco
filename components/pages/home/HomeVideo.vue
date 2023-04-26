@@ -7,5 +7,5 @@
 </template>
 
 <script setup>
-import home_video from "../../../assets/videos/1.mp4";
+import home_video from "~/assets/videos/1.mp4";
 </script>

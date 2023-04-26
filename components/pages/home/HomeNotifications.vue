@@ -52,7 +52,6 @@ const textRef = ref(null);
 const wid = ref(null);
 
 onMounted(() => {
-  console.log(textRef.value.clientWidth);
   wid.value = textRef.value.clientWidth;
 });
 </script>

@@ -9,5 +9,5 @@
 </template>
 
 <script setup>
-import logo from "~/assets/images/auth/logo.png";
+import logo from "~/assets/images/common/logo.png";
 </script>

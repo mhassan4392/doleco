@@ -1,6 +1,6 @@
 <template>
   <div class="h-full flex flex-col">
-    <PageHeader title="Detail" back-route="/news" />
+    <PageHeader title="Detail" />
     <div class="grow overflow-auto py-2 px-3 space-y-2">
       <h2 class="text-lg">Our History</h2>
       <p class="text-xs text-white">News 17/02/2021</p>

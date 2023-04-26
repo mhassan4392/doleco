@@ -24,16 +24,4 @@ definePageMeta({
 });
 </script>
 
-<style>
-.van-tabs__nav {
-  @apply !bg-primary;
-}
-
-.van-tabs__line {
-  @apply !bg-white;
-}
-
-.van-tab__text {
-  @apply !text-white !font-thin;
-}
-</style>
+<style></style>

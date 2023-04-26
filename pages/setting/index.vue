@@ -16,6 +16,7 @@
       </div>
 
       <van-button
+        @click="onClick"
         class="!w-full !text-white !text-lg !font-medium !rounded-lg !bg-secondary !border-secondary"
       >
         Sign Out
@@ -28,10 +29,27 @@
 import PageHeader from "~/components/pages/PageHeader.vue";
 import profile from "~/assets/images/common/profile.jpeg";
 
+import { showConfirmDialog } from "vant";
+
 const links = ref([
   { title: "Peronal Information", route: "/setting/uinfo" },
   { title: "Modify Login Password", route: "/setting/password" },
   { title: "Modify Payment Password", route: "/setting/password2" },
   { title: "Bind Bank Password", route: "/setting/bank" },
 ]);
+
+const onClick = () => {
+  showConfirmDialog({
+    title: "Are You Sure ?",
+    confirmButtonText: "Confirm",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "red",
+  })
+    .then(() => {
+      // on confirm
+    })
+    .catch(() => {
+      // on cancel
+    });
+};
 </script>

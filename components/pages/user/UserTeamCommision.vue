@@ -15,8 +15,11 @@
       </div>
     </div>
 
-    <button class="bg-[#ff976a] text-white py-2 rounded-full w-full">
+    <NuxtLink
+      to="/rebate"
+      class="bg-[#ff976a] text-white py-2 flex items-center justify-center rounded-full w-full"
+    >
       Team Commission
-    </button>
+    </NuxtLink>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed left-0 right-0 bottom-0 grid grid-cols-4 items-center bg-white"
+    class="fixed left-0 right-0 bottom-0 grid grid-cols-4 items-center bg-white max-width mx-auto"
     :style="{ height: '52px' }"
   >
     <NuxtLink

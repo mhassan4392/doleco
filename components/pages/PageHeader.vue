@@ -2,21 +2,33 @@
   <van-nav-bar
     :title="title || ''"
     left-text="Back"
+    :right-text="rightText || ''"
     left-arrow
     @click-left="onClickLeft"
+    @click-right="onClickRight"
   />
 </template>
 
 <script setup>
-const { backRoute } = defineProps(["backRoute", "title"]);
+const { backRoute, rightRoute } = defineProps([
+  "backRoute",
+  "title",
+  "rightText",
+  "rightRoute",
+]);
 const router = useRouter();
 
 const onClickLeft = () => {
-  console.log(backRoute);
   if (backRoute) {
     router.push({ path: backRoute });
   } else {
     router.back();
+  }
+};
+
+const onClickRight = () => {
+  if (rightRoute) {
+    router.push(rightRoute);
   }
 };
 </script>
@@ -40,5 +52,9 @@ const onClickLeft = () => {
 
 .van-nav-bar__title {
   @apply !font-medium;
+}
+
+.var-nav-bar__right {
+  @apply !font-semibold;
 }
 </style>
