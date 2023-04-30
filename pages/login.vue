@@ -1,7 +1,8 @@
 <template>
   <div class="bg-white rounded-lg py-3 auth-form">
     <van-field
-      v-model="phone"
+      v-model="formData.phone"
+      :error="phone.$error"
       type="number"
       placeholder="Please Type Phone Number"
     >
@@ -15,7 +16,8 @@
     </van-field>
 
     <van-field
-      v-model="password"
+      v-model="formData.password"
+      :error="password.$error"
       type="password"
       placeholder="Please Type Your Password"
     >
@@ -25,7 +27,8 @@
     </van-field>
 
     <van-field
-      v-model="validCode"
+      v-model="formData.code"
+      :error="code.$error"
       type="text"
       placeholder="Graphic Verification Code"
     >
@@ -33,12 +36,15 @@
         <van-image :src="shield_icon" class="-mb-2.5" width="40px" />
       </template>
       <template #button>
-        <van-image :src="verification_code" width="90px" />
+        <van-loading v-if="validCodeLoading" />
+        <van-image @click="refresh" v-else :src="codeImage" width="90px" />
       </template>
     </van-field>
 
     <div class="px-5 my-3">
       <van-button
+        @click="handleSubmit"
+        :pending="loading"
         class="!bg-secondary !border-secondary !text-white !text-lg !font-medium !w-full"
       >
         Sign In
@@ -48,7 +54,7 @@
     <div
       class="flex items-center justify-around text-xs text-[#666] mt-5 mb-3 px-5"
     >
-      <NuxtLink to="/forgot"> Forgot Password ? </NuxtLink>
+      <NuxtLink to="/forget"> Forgot Password ? </NuxtLink>
       <NuxtLink to="/register"> Register Now </NuxtLink>
     </div>
   </div>
@@ -58,14 +64,54 @@
 import phone_icon from "~/assets/images/auth/phone-icon.png";
 import lock_icon from "~/assets/images/auth/lock-icon.png";
 import shield_icon from "~/assets/images/auth/shield-icon.png";
+import useLogin from "~/composables/auth/useLogin";
+import useValidcode from "~/composables/auth/useValidcode";
 
-import verification_code from "~/assets/images/auth/verification-code.png";
-const phone = ref("");
-const password = ref("");
-const validCode = ref("");
+const {
+  loading: validCodeLoading,
+  sessionId,
+  refresh,
+  codeImage,
+} = useValidcode();
+
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+
+const formData = reactive({
+  phone: "",
+  password: "",
+  code: "",
+});
+
+const rules = {
+  phone: { required },
+  code: { required },
+  password: { required },
+};
+
+const v = useVuelidate(rules, formData);
+const { phone, password, code } = v.value;
+
+const { loading, login } = useLogin();
+
 definePageMeta({
   layout: "auth",
+  middleware: "loggedout",
 });
+
+const handleSubmit = async () => {
+  v.value.$validate();
+  if (!v.value.$error) {
+    await login({
+      phone: formData.phone,
+      password: formData.password,
+      sessionId: sessionId.value,
+      code: formData.code,
+    });
+  } else {
+    showToast("please fill form");
+  }
+};
 </script>
 
 <style>

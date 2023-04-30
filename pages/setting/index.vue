@@ -30,6 +30,9 @@ import PageHeader from "~/components/pages/PageHeader.vue";
 import profile from "~/assets/images/common/profile.jpeg";
 
 import { showConfirmDialog } from "vant";
+import useLogout from "~/composables/auth/useLogout";
+
+const router = useRouter();
 
 const links = ref([
   { title: "Peronal Information", route: "/setting/uinfo" },
@@ -38,18 +41,21 @@ const links = ref([
   { title: "Bind Bank Password", route: "/setting/bank" },
 ]);
 
+const { loading, logout } = useLogout();
+
+const beforeClose = (action) =>
+  new Promise(async (resolve) => {
+    router.push("/login");
+    await logout(() => resolve(action === "confirm"));
+  });
+
 const onClick = () => {
   showConfirmDialog({
     title: "Are You Sure ?",
     confirmButtonText: "Confirm",
     cancelButtonText: "Cancel",
     confirmButtonColor: "red",
-  })
-    .then(() => {
-      // on confirm
-    })
-    .catch(() => {
-      // on cancel
-    });
+    beforeClose,
+  });
 };
 </script>

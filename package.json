@@ -10,10 +10,26 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.6.6",
+    "@sidebase/nuxt-session": "^0.2.7",
     "@types/node": "^18",
+    "@types/nodejs-captcha": "^0.0.0",
     "@vant/nuxt": "^1.0.1",
     "nuxt": "^3.4.2",
+    "prisma": "^4.13.0",
     "sass": "^1.62.0",
     "vant": "^4.2.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.13.0",
+    "@vuelidate/core": "^2.0.2",
+    "@vuelidate/validators": "^2.0.2",
+    "@vueuse/core": "^10.1.0",
+    "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
+    "date-fns": "^2.29.3",
+    "jsonwebtoken": "^9.0.0",
+    "nodejs-captcha": "^0.0.6",
+    "vee-validate": "^4.8.6",
+    "yup": "^1.1.1"
   }
 }
