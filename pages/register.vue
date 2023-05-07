@@ -50,6 +50,7 @@
 
       <van-field
         v-model="formData.invitation"
+        :error="invitation?.$error"
         type="text"
         placeholder="Please enter the invitation code"
       >
@@ -99,10 +100,11 @@ const rules = {
   phone: { required },
   sms: { required },
   password: { required },
+  invitation: { required },
 };
 
 const v = useVuelidate(rules, formData);
-const { phone, password, sms } = v.value;
+const { phone, password, sms, invitation } = v.value;
 
 definePageMeta({
   layout: "auth",
@@ -124,10 +126,11 @@ const submit = async () => {
   if (!v.value.$error) {
     stopCounter();
     await register({
-      phone: formData.phone,
+      phone: "91" + formData.phone,
       password: formData.password,
       otp: formData.sms,
       sessionId: sessionId.value,
+      invitation: formData.invitation,
     });
   } else {
     showToast("please fill form");
@@ -139,7 +142,7 @@ const handleOptp = () => {
 
   if (formData.phone) {
     if (counter.value == 0) {
-      sendOtp({ phone: formData.phone });
+      sendOtp({ phone: "91" + formData.phone });
     }
   } else {
     showToast("missing mobile number");

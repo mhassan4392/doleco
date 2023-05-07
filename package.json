@@ -20,6 +20,8 @@
     "vant": "^4.2.0"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^37.1.0",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
     "@prisma/client": "^4.13.0",
     "@vuelidate/core": "^2.0.2",
     "@vuelidate/validators": "^2.0.2",
@@ -27,9 +29,8 @@
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.29.3",
+    "formidable": "^2.1.1",
     "jsonwebtoken": "^9.0.0",
-    "nodejs-captcha": "^0.0.6",
-    "vee-validate": "^4.8.6",
-    "yup": "^1.1.1"
+    "nodejs-captcha": "^0.0.6"
   }
 }

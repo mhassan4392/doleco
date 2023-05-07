@@ -6,21 +6,21 @@
       <div class="bg-white rounded-lg py-2 text-sm">
         <van-cell-group inset>
           <van-field
-            v-model="id"
+            v-model="formData.id"
             label="ID"
             readonly
             label-class="!text-right"
           />
           <van-field
-            v-model="account"
+            v-model="formData.phone"
             type="tel"
             label="Account"
             readonly
             label-class="!text-right"
           />
           <van-field
-            v-model="nickname"
-            type="digit"
+            v-model="formData.nickname"
+            type="text"
             label="Nickname"
             label-class="!text-right"
           />
@@ -31,12 +31,12 @@
             label-class="!text-right"
           >
             <template #input>
-              <van-image
-                width="80px"
-                height="80px"
-                fit="contain"
-                :src="profile"
+              <img
+                v-if="user?.avatar"
+                :style="{ width: '80px', height: '80px' }"
+                :src="`/uploads/users/${user?.avatar}`"
               />
+              <van-image v-else width="80px" height="80px" />
             </template>
           </van-field>
 
@@ -46,13 +46,19 @@
             label-class="!text-right"
           >
             <template #input>
-              <van-uploader upload-icon="plus" />
+              <van-uploader
+                upload-icon="plus"
+                v-model="formData.image"
+                max-count="1"
+              />
             </template>
           </van-field>
         </van-cell-group>
       </div>
 
       <van-button
+        @click="handleSubmit"
+        :loading="loading"
         class="!w-full !text-white !text-lg !font-medium !rounded-lg !bg-secondary !border-secondary"
       >
         Submit
@@ -63,8 +69,34 @@
 
 <script setup>
 import PageHeader from "~/components/pages/PageHeader.vue";
-import profile from "~/assets/images/common/profile.jpeg";
-const id = ref("140645");
-const account = ref("918882100629");
-const nickname = ref("nk35a5f492");
+import useAuth from "~/composables/auth/useAuth";
+import useUpdateUser from "~/composables/auth/useUpdateUser";
+
+const { user } = useAuth();
+
+const formData = reactive({
+  id: user?.value?.id || "",
+  phone: user?.value?.phone || "",
+  nickname: user?.value?.nickName || "",
+  image: [],
+});
+
+watch(user, (value) => {
+  if (value) {
+    formData.id = value?.id || "";
+    formData.phone = value?.phone || "";
+    formData.nickname = value?.nickName || "";
+  }
+});
+
+const { loading, updateUser } = useUpdateUser();
+
+const handleSubmit = async () => {
+  const data = new FormData();
+  data.append("nickName", formData.nickname);
+  if (formData.image.length > 0) {
+    data.append("avatar", formData.image[0]?.file);
+  }
+  await updateUser(data);
+};
 </script>

@@ -1,11 +1,11 @@
 <template>
   <div class="h-screen bg-primary overflow-hidden w-screen">
     <div class="h-full max-width relative !mx-auto">
-      <van-overlay :show="loading">
+      <!-- <van-overlay :show="loading">
         <div class="h-full w-full flex items-center justify-center" @click.stop>
           <van-loading size="24px" vertical>Loading...</van-loading>
         </div>
-      </van-overlay>
+      </van-overlay> -->
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
@@ -17,7 +17,7 @@
 import useAuth from "~/composables/auth/useAuth";
 const { loading, getUser } = useAuth();
 
-onMounted(() => {
+onBeforeMount(() => {
   getUser();
 });
 

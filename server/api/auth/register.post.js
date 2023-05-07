@@ -1,12 +1,14 @@
 import bcrypt from "bcryptjs";
 import prisma from "~/server/db";
+import captcha from "nodejs-captcha";
 export default defineEventHandler(async (event) => {
   const session = event.context.session;
   let user = null;
+  const c = captcha();
   try {
     // get body
     const data = await readBody(event);
-    const { password, phone, sessionId, otp } = data.body;
+    const { password, phone, sessionId, otp, invitation } = data.body;
     // find user
     user = await prisma.user.findUnique({
       where: {
@@ -19,6 +21,23 @@ export default defineEventHandler(async (event) => {
         statusCode: 401,
         statusMessage: "user already exist",
       });
+    }
+
+    const users = await prisma.user.count();
+    let invitationUser;
+    if (users != 0) {
+      invitationUser = await prisma.user.findUnique({
+        where: {
+          code: invitation,
+        },
+      });
+
+      if (!invitationUser) {
+        return createError({
+          statusCode: 401,
+          statusMessage: "invitation link is incorrect",
+        });
+      }
     }
 
     // compare session
@@ -42,12 +61,15 @@ export default defineEventHandler(async (event) => {
         data: {
           phone,
           password: hash,
+          code: c.value,
+          invitationId: invitationUser ? invitationUser.id : null,
         },
       });
     }
 
     return {};
   } catch (e) {
+    console.log(e);
     return createError({ statusCode: e.code, statusMessage: e.message });
   }
 });

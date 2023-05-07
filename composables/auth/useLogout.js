@@ -11,7 +11,7 @@ const useLogout = () => {
     try {
       loading.value = true;
       error.value = null;
-      const res = await Axios.post("/api/auth/logout", {
+      await Axios.post("/api/auth/logout", {
         body: { token: token.value },
       });
 

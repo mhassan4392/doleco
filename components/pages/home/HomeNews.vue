@@ -8,21 +8,23 @@
     </div>
     <div class="grid grid-cols-2">
       <NuxtLink
-        to="/news"
+        :to="`/news/${n.slug}`"
         class="border-b border-white border-opacity-50 px-2 py-3 space-y-3"
-        v-for="news in 6"
-        :key="news"
+        v-for="(n, i) in news"
+        :key="i"
       >
         <img
-          src="~/assets/images/pages/home/news.jpg"
+          :src="'/uploads/news/' + n.image"
           :style="{ aspectRatio: '2/1.3' }"
           class="rounded-lg"
           alt=""
         />
-        <p class="text-xs text-center">How to make money in Dole plc?</p>
+        <p class="text-xs text-center">{{ n.title }}</p>
       </NuxtLink>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const { data: news } = await useFetch("/api/news?featured=true");
+</script>

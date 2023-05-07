@@ -1,16 +1,21 @@
 <template>
   <NuxtLink
-    to="/news/1"
+    :to="`/news/${news.slug}`"
     class="flex justify-between bg-white rounded p-2 text-sm"
   >
     <div class="flex flex-col justify-between">
-      <h2>Our History</h2>
-      <p>17/2/2021</p>
+      <h2>{{ news.title }}</h2>
+      <p>{{ format(new Date(news.createdAt), "yyyy-MM-dd") }}</p>
     </div>
-    <van-image :src="news_image" :style="{ width: '115px' }" />
+    <van-image
+      v-if="news.image"
+      :src="`/uploads/news/${news.image}`"
+      :style="{ height: '100px', width: '100px' }"
+    />
   </NuxtLink>
 </template>
 
 <script setup>
-import news_image from "~/assets/images/pages/news/news.jpg";
+const { news } = defineProps(["news"]);
+import { format } from "date-fns";
 </script>

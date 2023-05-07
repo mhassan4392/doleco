@@ -11,7 +11,19 @@
           isLink
           :to="link.route"
         >
-          <van-image v-if="i == 0" :src="profile" width="30px" alt="" />
+          <div
+            class="flex items-center justify-end"
+            v-if="i == 0 && user?.avatar"
+          >
+            <img
+              :src="`/uploads/users/${user?.avatar}`"
+              :style="{
+                width: '25px',
+                height: '25px',
+              }"
+              alt=""
+            />
+          </div>
         </van-cell>
       </div>
 
@@ -31,6 +43,7 @@ import profile from "~/assets/images/common/profile.jpeg";
 
 import { showConfirmDialog } from "vant";
 import useLogout from "~/composables/auth/useLogout";
+import useAuth from "~/composables/auth/useAuth";
 
 const router = useRouter();
 
@@ -41,7 +54,9 @@ const links = ref([
   { title: "Bind Bank Password", route: "/setting/bank" },
 ]);
 
-const { loading, logout } = useLogout();
+const { logout } = useLogout();
+
+const { user } = useAuth();
 
 const beforeClose = (action) =>
   new Promise(async (resolve) => {

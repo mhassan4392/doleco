@@ -1,7 +1,6 @@
 export default defineEventHandler(async (event) => {
-  const session = event.context.session;
   try {
-    session.user = null;
+    event.context.user = null;
 
     return {};
   } catch (e) {

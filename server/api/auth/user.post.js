@@ -27,10 +27,11 @@ export default defineEventHandler(async (event) => {
       return createError({ statusCode: 401, statusMessage: "user not found" });
     }
 
-    session.user = user;
+    event.context.user = user;
 
     return { user };
   } catch (e) {
+    console.log(e);
     return createError({ statusCode: e.code, statusMessage: e.message });
   }
 });

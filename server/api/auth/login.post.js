@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     const { password, sessionId, code, phone } = data.body;
 
     // find user
-    user = await prisma.user.findFirst({
+    user = await prisma.user.findUnique({
       where: {
         phone,
       },
@@ -47,10 +47,10 @@ export default defineEventHandler(async (event) => {
 
     // generate json web token
     const token = await jwt.sign({ phone: user.phone }, jwtSecret, {
-      expiresIn: "1d",
+      expiresIn: "30d",
     });
 
-    session.user = user;
+    event.context.user = user;
 
     return { user, token };
   } catch (e) {

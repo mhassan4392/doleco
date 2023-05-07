@@ -11,9 +11,7 @@ export default defineEventHandler(async (event) => {
 
     const c = captcha();
     const value = c.value;
-    // const time = new Date(Date.now() + addSeconds(20)).toString();
     const time = addSeconds(Date.now(), 60).toString();
-    console.log(time);
     event.context.session.otp = {
       value,
       phone,

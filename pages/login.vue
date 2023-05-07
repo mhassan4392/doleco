@@ -103,7 +103,7 @@ const handleSubmit = async () => {
   v.value.$validate();
   if (!v.value.$error) {
     await login({
-      phone: formData.phone,
+      phone: "91" + formData.phone,
       password: formData.password,
       sessionId: sessionId.value,
       code: formData.code,

@@ -14,10 +14,37 @@ model User {
   id    Int     @id @default(autoincrement())
   phone String  @unique
   password  String?
-  Avatar String?
+  avatar String?
+  nickName String?
   isAdmin Boolean @default(false)
+  code String? @unique
+  invitationId Int?
+  successor   User?   @relation("Team", fields: [invitationId], references: [id])
+  team  User[]  @relation("Team")
+  card Bank?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
-  resetPasswordToken String?
-  resetPasswordTokenExpireDate DateTime?
+}
+
+model News {
+  id Int @id @default(autoincrement())
+  title String @unique
+  slug String @unique
+  body String?
+  image String?
+  featured Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+}
+
+model Bank {
+  id Int @id @default(autoincrement())
+  name String
+  bank String
+  ifsc String
+  account String
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
 }

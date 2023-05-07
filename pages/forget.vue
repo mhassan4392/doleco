@@ -119,7 +119,6 @@ const {
 
 const handleSubmit = async () => {
   v.value.$validate();
-  console.log(password);
   if (!v.value.$error) {
     stopCounter();
     await reset({

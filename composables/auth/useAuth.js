@@ -18,10 +18,12 @@ const useAuth = () => {
     token.value = tokenCookie.value;
     try {
       if (token.value) {
+        Axios.defaults.headers.common.Authorization = token.value;
         error.value = false;
         const res = await Axios.post("/api/auth/user", {
           body: { token: token.value },
         });
+        user.value = res.data.user;
         loading.value = false;
       }
 
@@ -29,6 +31,9 @@ const useAuth = () => {
     } catch (e) {
       error.value = e.response?.data?.message || e.message;
       loading.value = false;
+      token.value = null;
+      tokenCookie.value = null;
+      user.value = null;
     }
   };
 

@@ -38,17 +38,57 @@
           <td class="text-center">Registration Time</td>
         </tr>
       </thead>
+      <tfoot>
+        <tr v-for="(t, i) in team" :key="i">
+          <td
+            class="text-center border-b border-secondary border-opacity-50 py-2 text-xs"
+          >
+            <img
+              v-if="t.avatar"
+              :src="`/uploads/users/${t.avatar}`"
+              :style="{ width: '50px', height: '50px' }"
+              alt=""
+            />
+            <van-image v-else width="50px" height="50px" />
+          </td>
+          <td
+            class="text-center border-b border-secondary border-opacity-50 py-2 text-xs"
+          >
+            {{ t.phone }}
+          </td>
+          <td
+            class="text-center border-b border-secondary border-opacity-50 py-2 text-xs"
+          ></td>
+          <td
+            class="text-center border-b border-secondary border-opacity-50 py-2 text-xs"
+          >
+            {{ format(new Date(t.createdAt), "yyyy-MM-dd") }}
+          </td>
+        </tr>
+      </tfoot>
     </table>
     <p class="my-3 text-sm text-white text-center">No More</p>
   </div>
 </template>
 
 <script setup>
+import { format } from "date-fns";
 import PageHeader from "~/components/pages/PageHeader.vue";
+import Axios from "~/utils/axios";
 
 const tabs1 = ref(["B10% - (0)", "C5% - (0)", "D2% - (0)"]);
 const tabs2 = ref(["Invalid Members", "Valid Members"]);
 
 const tab1 = ref(0);
 const tab2 = ref(0);
+
+const team = ref([]);
+
+onMounted(async () => {
+  try {
+    const res = await Axios({ url: "/api/auth/team" });
+    console.log(res);
+    team.value = res.data.team;
+  } catch (e) {}
+});
 </script>
